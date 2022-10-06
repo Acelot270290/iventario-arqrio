@@ -5,7 +5,7 @@
 <div class="main-content">
   @section('content')
   <section class="section">
-    <h1>Links rápidosssssssss</h1>
+    <h1>Links rápidos</h1>
     <div class="row ">
       <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-1">
       </div>

@@ -1,5 +1,4 @@
 	@include('web.layout.header')
-
 			<!-- start banner Area -->
 			<section class="banner-area relative" id="home">
 				<div class="overlay overlay-bg"></div>	

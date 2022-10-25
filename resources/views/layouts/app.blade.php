@@ -23,8 +23,6 @@
   <link href='https://fonts.googleapis.com/css?family=Baloo Paaji' rel='stylesheet'>
   <!-- CSS Select2 -->
 
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-
 
   <link rel="stylesheet" href="{{ url('assets/bundles/select2/dist/css/select2.min.css') }}">
 

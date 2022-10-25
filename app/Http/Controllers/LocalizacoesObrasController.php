@@ -25,7 +25,7 @@ class LocalizacoesObrasController extends Controller
 
             Alert::error('Dados já Existente', 'Localização ' . $nome_localicacao . '</b> já Existe');
             return back();
-        } elseif (empty($nome_localicacao)) {
+        } elseif (empty($nome_tesauro)) {
 
             Alert::error('Erro', 'Precisa Digitar os dados');
             return back();
@@ -36,7 +36,7 @@ class LocalizacoesObrasController extends Controller
             $localicacaoObras->nome_localizacao = $request->cadatro_nome_localicacao;
             $localicacaoObras->save();
 
-            Alert::success('Localização Salvo', 'Registro salvo com sucesso!');
+            Alert::success('LTesauro Salvo', 'Registro salvo com sucesso!');
             return back();
         }
     }

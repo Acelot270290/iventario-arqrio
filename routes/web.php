@@ -31,35 +31,35 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/unauthorized', 'HomeController@unauthorized')->name('unauthorized');
 
 // Usuários
-Route::get('/admin/usuarios', 'UserController@index')->name('usuarios');
-Route::get('/admin//usuarios/criar', 'UserController@criar')->name('criar_usuario');
+Route::get('usuarios', 'UserController@index')->name('usuarios');
+Route::get('/usuarios/criar', 'UserController@criar')->name('criar_usuario');
 
-Route::post('/admin//usuarios/adicionar', 'UserController@adicionar')->name('adicionar_usuario');
+Route::post('/usuarios/adicionar', 'UserController@adicionar')->name('adicionar_usuario');
 
 // Acervos
-Route::get('/admin//acervo', 'AcervoController@index')->name('acervo');
-Route::get('/admin//acervo/criar', 'AcervoController@criar')->name('criar_acervo');
-Route::get('/admin//acervo/detalhar/{id}', 'AcervoController@detalhar')->name('detalhar_acervo');
-Route::get('/admin//acervo/editar/{id}', 'AcervoController@editar')->name('editar_acervo');
+Route::get('/acervo', 'AcervoController@index')->name('acervo');
+Route::get('/acervo/criar', 'AcervoController@criar')->name('criar_acervo');
+Route::get('/acervo/detalhar/{id}', 'AcervoController@detalhar')->name('detalhar_acervo');
+Route::get('/acervo/editar/{id}', 'AcervoController@editar')->name('editar_acervo');
 
-Route::post('/admin/acervo/adicionar', 'AcervoController@adicionar')->name('adicionar_acervo');
-Route::post('/admin//acervo/atualizar/{id}', 'AcervoController@atualizar')->name('atualizar_acervo');
-Route::post('/admin//acervo/deletar/{id}', 'AcervoController@deletar')->name('deletar_acervo');
+Route::post('acervo/adicionar', 'AcervoController@adicionar')->name('adicionar_acervo');
+Route::post('/acervo/atualizar/{id}', 'AcervoController@atualizar')->name('atualizar_acervo');
+Route::post('/acervo/deletar/{id}', 'AcervoController@deletar')->name('deletar_acervo');
 
-Route::get('/admin//acervo/{id}/obras', 'AcervoController@getObrasAcervo')->name('acervo_obras');
+Route::get('/acervo/{id}/obras', 'AcervoController@getObrasAcervo')->name('acervo_obras');
 
 // Obras
-Route::get('/admin//obra', 'ObraController@index')->name('obra');
-Route::get('/admin//obra/criar', 'ObraController@criar')->name('criar_obra');
-Route::get('/admin//obra/detalhar/{id}', 'ObraController@detalhar')->name('detalhar_obra');
-Route::get('/admin//obra/editar/{id}', 'ObraController@editar')->name('editar_obra');
+Route::get('/obra', 'ObraController@index')->name('obra');
+Route::get('/obra/criar', 'ObraController@criar')->name('criar_obra');
+Route::get('/obra/detalhar/{id}', 'ObraController@detalhar')->name('detalhar_obra');
+Route::get('/obra/editar/{id}', 'ObraController@editar')->name('editar_obra');
 
-Route::post('/admin//obra/adicionar', 'ObraController@adicionar')->name('adicionar_obra');
-Route::post('/admin//obra/atualizar/{id}', 'ObraController@atualizar')->name('atualizar_obra');
-Route::post('/admin//obra/deletar/{id}', 'ObraController@deletar')->name('deletar_obra');
+Route::post('/obra/adicionar', 'ObraController@adicionar')->name('adicionar_obra');
+Route::post('/obra/atualizar/{id}', 'ObraController@atualizar')->name('atualizar_obra');
+Route::post('/obra/deletar/{id}', 'ObraController@deletar')->name('deletar_obra');
 
 //Busca Obras
-Route::get('/admin//busca-obras', 'BuscaObrasController@index')->name('busca_obras');
+Route::get('/busca-obras', 'BuscaObrasController@index')->name('busca_obras');
 
 //Redefinição de senha
 Mail::to('reset@alandiniz.com.br')->send(new MensagemMail());

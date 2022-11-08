@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', 'PortalController@index')->name('portal');
+//Busca Obras
+Route::get('/busca-obras-publico', 'BuscaObrasPublicoController@index')->name('busca_obras_publico');
 
 
 //Admin do Site

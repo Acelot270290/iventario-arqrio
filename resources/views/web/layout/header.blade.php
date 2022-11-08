@@ -56,6 +56,7 @@
 				          <li class="menu-active"><a href="{{url('/#home')}}">Home</a></li>
 				          <li><a href="{{url('/#sobre-nos')}}">Sobre</a></li>
 				          <li><a href="{{url('/#galeria')}}">Galeria</a></li>
+				          <li><a href="{{url('/busca-obras-publico')}}">Busca Obras</a></li>
 				          <li><a href="{{url('/#blog')}}">Blog</a></li>
 				          <li><a href="{{url('login')}}">Login</a></li>	          
 				        </ul>

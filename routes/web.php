@@ -20,8 +20,11 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', 'PortalController@index')->name('portal');
+
 //Busca Obras
-Route::get('/busca-obras-publico', 'BuscaObrasPublicoController@index')->name('busca_obras_publico');
+Route::get('/busca/obras', 'BuscaObrasPublicoController@index')->name('busca_obras_publico');
+
+Route::post('/busca/obras/form', 'BuscaObrasPublicoController@busca')->name('busca_obras_publico_form');
 
 
 //Admin do Site
@@ -44,7 +47,7 @@ Route::get('/acervo/criar', 'AcervoController@criar')->name('criar_acervo');
 Route::get('/acervo/detalhar/{id}', 'AcervoController@detalhar')->name('detalhar_acervo');
 Route::get('/acervo/editar/{id}', 'AcervoController@editar')->name('editar_acervo');
 
-Route::post('acervo/adicionar', 'AcervoController@adicionar')->name('adicionar_acervo');
+Route::post('/acervo/adicionar', 'AcervoController@adicionar')->name('adicionar_acervo');
 Route::post('/acervo/atualizar/{id}', 'AcervoController@atualizar')->name('atualizar_acervo');
 Route::post('/acervo/deletar/{id}', 'AcervoController@deletar')->name('deletar_acervo');
 

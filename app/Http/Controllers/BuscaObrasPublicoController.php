@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Acervos;
+use App\Models\Obras;
 use App\Models\Categorias;
 use App\Models\CondicaoSegurancaObras;
 use App\Models\EspecificacaoObras;
@@ -19,8 +20,6 @@ use Illuminate\Http\Request;
 class BuscaObrasPublicoController extends Controller
 {
     public function index(){
-
-       
         // Seleciona os dados necessários para o preenchimento dos dados do formulário de criação de obras (checkboxes, select, ...)
         $acervos = Acervos::select('id', 'nome_acervo');
 
@@ -55,11 +54,55 @@ class BuscaObrasPublicoController extends Controller
                 'localizacoes' => $localizacoes,
                 'seculos' => $seculos,
                 'tombamentos' => $tombamentos,
-                'condicoes' => $condicoes,
                 'especificacoesSeg' => $especificacoesSeg,
                 'materiais' => $materiais,
                 'tecnicas' => $tecnicas,
                 'tesauros'=>$tesauros
         ]);
+    }
+
+    public function busca(Request $request){
+        // Cria uma lista de dados para serem aplicados nos filtros contendo os pares de coluna e valor
+        $filtros = array(
+            ['categoria_id', $request->input('categoria_obra')],
+            ['acervo_id', $request->input('acervo_obra')],
+            ['titulo_obra', $request->input('titulo_obra')],
+            ['tesauro_id', $request->input('tesauro_obra')],
+            ['localizacao_obra_id', $request->input('localizacao_obra')],
+            ['procedencia_obra', $request->input('procedencia_obra')],
+            ['tombamento_id', $request->input('tombamento_obra')],
+            ['seculo_id', $request->input('seculo_obra')],
+            ['ano_obra', $request->input('ano_obra')],
+            ['estado_conservacao_obra_id', $request->input('estado_de_conservacao_obra')],
+            ['autoria_obra', $request->input('autoria_obra')],
+            ['material_id_1', $request->input('material_obra')],
+            ['material_id_2', $request->input('material_obra')],
+            ['material_id_3', $request->input('material_obra')],
+            ['tecnica_id_1', $request->input('tecnica_obra')],
+            ['tecnica_id_2', $request->input('tecnica_obra')],
+            ['tecnica_id_3', $request->input('tecnica_obra')]
+        );
+
+        // Cria a query para buscar as obras selecionando todas as obras
+        $query = Obras::select('obras.*');
+        
+        // Percorre a lista de filtros e aplica os filtros que não são nulos
+        foreach($filtros as $filtro){
+            if($filtro[1] != null){
+                $query->where($filtro[0], $filtro[1]);
+            }
+        }
+
+        // Pega os dados
+        $obras = $query->get();
+
+        // Imprime obras
+        //dd($obras);
+
+        // imprime os filtros
+        //dd($filtros);
+
+        // Imprime a query gerada
+        dd($query->toSql());
     }
 }

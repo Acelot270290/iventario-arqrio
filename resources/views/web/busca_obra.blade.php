@@ -21,7 +21,7 @@
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
             <form method="POST"
-              action="{{ route('adicionar_obra') }}"
+              action="{{ route('busca_obras_publico_form') }}"
               name="criar_obra" accept-charset="utf-8" enctype="multipart/form-data">
               @csrf
               <div class="card-header">
@@ -38,12 +38,13 @@
                         </div>
                       </div>
                       <select name="categoria_obra" class="form-control">
+                        <option value="" {{ old("categoria_obra") == null ? "selected" : "" }}>-</option>
                         @foreach ($categorias as $categoria)
-                        @if($categoria->is_default_categoria)
-                        <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
-                        @else
-                        <option value="{{ $categoria->id }}">{{ $categoria->titulo_categoria }}</option>
-                        @endif
+                          @if($categoria->id == old('categoria_obra'))
+                            <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
+                          @else
+                            <option value="{{ $categoria->id }}">{{ $categoria->titulo_categoria }}</option>
+                          @endif
                         @endforeach
                       </select>
                     </div>
@@ -58,7 +59,7 @@
                         </div>
                       </div>
                       <select name="acervo_obra" class="form-control select2">
-                        <option value="">Selecione um Acervo</option>
+                        <option value="" {{ old("acervo_obra") == null ? "selected" : "" }}>-</option>
                         @foreach ($acervos as $acervo)
                         @if($acervo->id == old('acervo_obra'))
                         <option value="{{ $acervo->id }}" selected>{{ $acervo->nome_acervo }}</option>
@@ -90,10 +91,10 @@
                   </div>
                 </div>
                 <div class="form-row">
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label>Tesauro</label>
                     <select name="tesauro_obra" class="form-control select2">
-                      <option value="">Selecione um tesauro</option>
+                      <option value="" {{ old("tesauro_obra") == null ? "selected" : "" }}>-</option>
                       @foreach ($tesauros as $tesauro)
                       @if(old('tesauro_obra') !== null)
                       <option value="{{ $tesauro->id }}" {{ old("tesauro_obra")==$tesauro->id ? "selected" : "" }}>{{
@@ -104,9 +105,8 @@
                       @endforeach
                     </select>
                     <small class="text-danger">{{ $errors->first('tesauro_obra') }}</small>
-
                   </div>
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label>Localização da obra</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -115,42 +115,19 @@
                         </div>
                       </div>
                       <select name="localizacao_obra" class="form-control select2">
-                        <option value="">Selecione uma localização</option>
+                        <option value="" {{ old("localizacao_obra") == null ? "selected" : "" }}>-</option>
                         @foreach ($localizacoes as $localizacao)
-                        @if(old('localizacao_obra') !== null)
-                        <option value="{{ $localizacao->id }}" {{ old("localizacao_obra")==$localizacao->id ? "selected"
-                          : "" }}>{{ $localizacao->nome_localizacao }}</option>
-                        @else
-                        @if($localizacao->is_default_localizacao)
-                        <option value="{{ $localizacao->id }}" selected>{{ $localizacao->nome_localizacao }}</option>
-                        @else
-                        <option value="{{ $localizacao->id }}">{{ $localizacao->nome_localizacao }}</option>
-                        @endif
-                        @endif
+                          @if(old('localizacao_obra') !== null)
+                            <option value="{{ $localizacao->id }}" {{ old("localizacao_obra")==$localizacao->id ? "selected": "" }}>{{ $localizacao->nome_localizacao }}</option>
+                          @else
+                            <option value="{{ $localizacao->id }}">{{ $localizacao->nome_localizacao }}</option>
+                          @endif
                         @endforeach
                       </select>
                     </div>
                     <small class="text-danger">{{ $errors->first('localizacao_obra') }}</small>
                   </div>
-                  <div class="form-group col-md-3">
-                    <label>Condições de Segurança</label>
-                    <select name="condicao_seguranca_obra" class="form-control">
-                      @foreach ($condicoes as $condicao)
-                      @if(old('condicao_seguranca_obra') !== null)
-                      <option value="{{ $condicao->id }}" {{ old("condicao_seguranca_obra")==$condicao->id ? "selected"
-                        : "" }}>{{$condicao->titulo_condicao_seguranca_obra}}</option>
-                      @else
-                      @if($condicao->is_default_condicao_seguranca_obra)
-                      <option value="{{ $condicao->id }}" selected>{{ $condicao->titulo_condicao_seguranca_obra }}
-                      </option>
-                      @else
-                      <option value="{{ $condicao->id }}">{{ $condicao->titulo_condicao_seguranca_obra }}</option>
-                      @endif
-                      @endif
-                      @endforeach
-                    </select>
-                  </div>
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label>Origem/Procedência</label>
                     <div class="input-group">
                       <input type="text" class="form-control" name="procedencia_obra"
@@ -163,35 +140,28 @@
                   <div class="form-group col-md-2">
                     <label>Tombamento</label>
                     <select name="tombamento_obra" class="form-control">
+                      <option value="" {{ old("tombamento_obra") == null ? "selected" : ""}}>-</option>
                       @foreach ($tombamentos as $tombamento)
-                      @if(old('tombamento_obra') !== null)
-                      <option value="{{ $tombamento->id }}" {{ old("tombamento_obra")==$tombamento->id ? "selected" : ""
-                        }}>{{ $tombamento->titulo_tombamento }}</option>
-                      @else
-                      @if($tombamento->is_default_tombamento)
-                      <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
-                      @else
-                      <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
-                      @endif
-                      @endif
+                        @if(old('tombamento_obra') !== null)
+                          <option value="{{ $tombamento->id }}" {{ old("tombamento_obra")==$tombamento->id ? "selected" : ""}}>{{ $tombamento->titulo_tombamento }}</option>
+                        @else
+                          <option value="{{ $tombamento->id }}">{{ $tombamento->titulo_tombamento }}</option>
+                        @endif
                       @endforeach
                     </select>
                   </div>
                   <div class="form-group col-md-2">
                     <label>Século</label>
-                    <select name="seculo_obra" class="form-control">
-                      @foreach ($seculos as $seculo)
-                      @if(old('seculo_obra') !== null)
-                      <option value="{{ $seculo->id }}" {{ old("seculo_obra")==$seculo->id ? "selected" : "" }}>{{
-                        $seculo->titulo_seculo }}</option>
-                      @else
-                      @if($seculo->is_default_seculo)
-                      <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
-                      @else
-                      <option value="{{ $seculo->id }}">{{ $seculo->titulo_seculo }}</option>
-                      @endif
-                      @endif
-                      @endforeach
+                      <select name="seculo_obra" class="form-control">
+                        <option value="" {{ old("seculo_obra") == null ? "selected" : ""}}>-</option>
+                        @foreach ($seculos as $seculo)
+                          @if(old('seculo_obra') !== null)
+                            <option value="{{ $seculo->id }}" {{ old("seculo_obra") == $seculo->id ? "selected" : "" }}>{{
+                            $seculo->titulo_seculo }}</option>
+                          @else
+                            <option value="{{ $seculo->id }}">{{ $seculo->titulo_seculo }}</option>
+                          @endif
+                        @endforeach
                     </select>
                     <small class="text-danger">{{ $errors->first('seculo_obra') }}</small>
                   </div>
@@ -209,22 +179,17 @@
                   </div>
                   <div class="form-group col-md-3">
                     <label>Estado de Conservação</label>
-                    <select name="estado_de_conservacao_obra" class="form-control">
-                      @foreach ($estados as $estado)
-                      @if(old('estado_de_conservacao_obra') !== null)
-                      <option value="{{ $estado->id }}" {{ old("estado_de_conservacao_obra")==$estado->id ? "selected" :
-                        "" }}>{{ $estado->titulo_estado_conservacao_obra }}</option>
-                      @else
-                      @if($estado->is_default_estado_conservacao_obra)
-                      <option value="{{ $estado->id }}" selected>{{ $estado->titulo_estado_conservacao_obra }}</option>
-                      @else
-                      <option value="{{ $estado->id }}">{{ $estado->titulo_estado_conservacao_obra }}</option>
-                      @endif
-                      @endif
-                      @endforeach
+                      <select name="estado_de_conservacao_obra" class="form-control">
+                        <option value="" {{ old("estado_de_conservacao_obra") == null ? "selected" : ""}}>-</option>
+                        @foreach ($estados as $estado)
+                          @if(old('estado_de_conservacao_obra') !== null)
+                          <option value="{{ $estado->id }}" {{ old("estado_de_conservacao_obra")==$estado->id ? "selected" :"" }}>{{ $estado->titulo_estado_conservacao_obra }}</option>
+                          @else
+                            <option value="{{ $estado->id }}">{{ $estado->titulo_estado_conservacao_obra }}</option>
+                          @endif
+                        @endforeach
                     </select>
                     <small class="text-danger">{{ $errors->first('estado_de_conservacao_obra') }}</small>
-
                   </div>
                   <div class="form-group col-md-3">
                     <label>Autoria</label>
@@ -242,30 +207,27 @@
                   <div class="form-group col-md-4">
                     <label>Material</label>
                     <select name="material_obra" class="form-control select2">
-                      <option value="">Selecione um Material</option>
+                      <option value="" {{ old("material_obra") == null ? "selected" : "" }}>-</option>
                       @foreach ($materiais as $material)
-                      @if(old('material_obra') !== null)
-                      <option value="{{ $material->id }}" {{ old("material_obra")==$material->id ? "selected" : ""
-                        }}>{{ $material->titulo_material }}</option>
-                      @else
-                      <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
-                      @endif
+                        @if(old('material_obra') !== null)
+                          <option value="{{ $material->id }}" {{ old("material_obra")==$material->id ? "selected" : ""}}>{{ $material->titulo_material }}</option>
+                        @else
+                          <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
+                        @endif
                       @endforeach
                     </select>
                     <small class="text-danger">{{ $errors->first('material_obra') }}</small>
-
                   </div>
                   <div class="form-group col-md-4">
                     <label>Técnica</label>
                     <select name="tecnica_obra" class="form-control select2">
-                      <option value="">Selecione uma Técnica</option>
+                      <option value="" {{ old("tecnica_obra") == null ? "selected" : "" }}>-</option>
                       @foreach ($tecnicas as $tecnica)
-                      @if(old('tecnica_obra') !== null)
-                      <option value="{{ $tecnica->id }}" {{ old("tecnica_obra")==$tecnica->id ? "selected" : "" }}>{{
-                        $tecnica->titulo_tecnica }}</option>
-                      @else
-                      <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
-                      @endif
+                        @if(old('tecnica_obra') !== null)
+                          <option value="{{ $tecnica->id }}" {{ old("tecnica_obra")==$tecnica->id ? "selected" : "" }}>{{$tecnica->titulo_tecnica }}</option>
+                        @else
+                          <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
+                        @endif
                       @endforeach
                     </select>
                     <small class="text-danger">{{ $errors->first('tecnica_obra') }}</small>
@@ -291,25 +253,6 @@
                       @endforeach
                     </div>
                     <small class="text-danger">{{ $errors->first('especificacao_obra') }}</small>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-12">
-                    <label>Especificações de segurança</label>
-                    <div style="display: flex; flex-wrap: wrap;">
-                      @foreach ($especificacoesSeg as $especificacaoSeg)
-                      <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                        <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;"
-                          value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}" {{
-                          in_array($especificacaoSeg->id, old('especificacao_seg_obra',[])) ? 'checked' : '' }}>
-                        <div class="state p-success">
-                          <label style="margin-left: 10px;" for="especificacao_seg_obra_{{ $especificacaoSeg->id }}">{{
-                            $especificacaoSeg->titulo_especificacao_seguranca_obra }}</label>
-                        </div>
-                      </div>
-                      @endforeach
-                    </div>
-                    <small class="text-danger">{{ $errors->first('especificacao_seg_obra') }}</small>
                   </div>
                 </div>
                 {{--}}

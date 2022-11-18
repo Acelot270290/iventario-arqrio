@@ -40,9 +40,5 @@ class EspecificacaoAcervosController extends Controller
         return back();
 
         }
-        
-
-        
-
     }
 }

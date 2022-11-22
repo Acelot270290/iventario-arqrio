@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('titulo', 'Busca Obras')
+@section('titulo', 'Buscar Obras')
 
 @section('content')
 
@@ -20,9 +20,7 @@
       <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
-            <form method="POST"
-              action="{{ route('busca_obras_publico_form') }}"
-              name="criar_obra" accept-charset="utf-8" enctype="multipart/form-data">
+            <form id="busca_form" type="POST" action="" name="criar_obra" accept-charset="utf-8" enctype="multipart/form-data">
               @csrf
               <div class="card-header">
                 <h4> Busca Obras </h4>
@@ -258,8 +256,8 @@
                 {{--}}
               </div>
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i>&nbsp;Buscar</button>
-                <a href="{{route('portal')}}" class=" btn btn-dark">voltar</a>
+                <button type="submit" class="btn btn-primary" id="buscar"><i class="fas fa-search"></i>&nbsp;Buscar</button>
+                <a href="{{ route('portal') }}" class=" btn btn-dark">voltar</a>
               </div>
             </form>
           </div>
@@ -271,100 +269,19 @@
 </div>
 
 <script>
-  // Parametrização de variáveis
-  @foreach ($seculos as $seculo)
-    @if ($seculo['is_default_seculo'])
-      var min = {{ $seculo['ano_inicio_seculo'] }};
-      var max = {{ $seculo['ano_fim_seculo'] }};
-    @endif
-  @endforeach
-  $(document).ready(function() {
-    function minMaxAno(){
-    // Checa o valor do século e seta o minimo e o máximo
-    @foreach ($seculos as $seculo)
-        @if ($seculo['titulo_seculo'] != 'Anterior a XVI') else @endif if($('select[name="seculo_obra"]').val() == '{{ $seculo['id'] }}'){
-            window.min = {{ $seculo['ano_inicio_seculo'] }};
-            window.max = {{ $seculo['ano_fim_seculo'] }};
-            }
-    @endforeach
-
-        // Seta os valores
-        $('input[name="ano_obra"]').attr('max', window.max);
-        $('input[name="ano_obra"]').attr('min', window.min);
-   }
-
-   $('select[name="seculo_obra"]').change(function() {
-        minMaxAno();
-   });
-
-   $('input[name="ano_obra"]').bind('keyup mouseup', function (e) {
-        if(e.keyCode !== 46 && e.keyCode !== 8 ){
-            if (((parseInt($('input[name="ano_obra"]').val()) > window.max) || (parseInt($('input[name="ano_obra"]').val()) < window.min)) && ($('input[name="ano_obra"]').val() != "")) {
-                e.preventDefault();
-                var errorBox = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    O ano não corresponde ao século selecionado.<br>
-                    <span style="margin-left:10px;">Ano mínimo: <b>` + window.min + `</b></span><br>
-                    <span style="margin-left:10px;">Ano máximo: <b>` + window.max + `</b></span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="notification-warn-mini"></div>;
-            $("#anoerror").html("");
-            $("#anoerror").append(errorBox);
-            } else {
-                $("#anoerror").html("");
-            }
-        }
-    });
-
-    function ajax_sub(control, image_holder){
-        //Get count of selected files
-        var countFiles = control[0].files.length;
-        var imgPath = control[0].value;
-        var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
-        image_holder.empty();
-        if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
-            if (typeof(FileReader) != "undefined") {
-                //loop for each file selected for uploaded.
-                for (var i = 0; i < countFiles; i++) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        $("<img />", {
-                            "src": e.target.result,
-                            "class": "thumb-image",
-                            "style": "width:100px; max-height: 200px;"
-                        }).appendTo(image_holder);
-                    }
-                    image_holder.show();
-                    reader.readAsDataURL(control[0].files[i]);
-                }
-            } else {
-                alert("Este navegador não suporta FileReader.");
-            }
-        } else {
-        alert("Por favor, selecione apenas com formatos válidos.");
-        }
-    }
-
-    $("input[name='foto_frontal_obra']").on('change', function() {
-        ajax_sub($("input[name='foto_frontal_obra']"), $("#image_holder_frontal_obra"));
-    });
-    $("input[name='foto_lateral_esquerda_obra']").on('change', function() {
-        ajax_sub($("input[name='foto_lateral_esquerda_obra']"), $("#image_holder_lateral_esquerda_obra"));
-    });
-    $("input[name='foto_lateral_direita_obra']").on('change', function() {
-        ajax_sub($("input[name='foto_lateral_direita_obra']"), $("#image_holder_lateral_direita_obra"));
-    });
-      $("input[name='foto_posterior_obra']").on('change', function() {
-      ajax_sub($("input[name='foto_posterior_obra']"), $("#image_holder_posterior_obra"));
-    });
-    $("input[name='foto_superior_obra']").on('change', function() {
-      ajax_sub($("input[name='foto_superior_obra']"), $("#image_holder_superior_obra"));
-    });
-    $("input[name='foto_inferior_obra']").on('change', function() {
-      ajax_sub($("input[name='foto_inferior_obra']"), $("#image_holder_inferior_obra"));
-    });
+  $(document).on('submit', '#busca_form', function(e) {
+      e.preventDefault();
+      let id = $(this).attr('data-id');
+      $.ajax({
+          url: '{{ route("busca_obras_publico_form") }}',
+          type: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': $('input[name=_token]').val()
+          },
+          data: $(this).serialize(),
+      }).done(function(data) {
+          console.log(data);
+      });
   });
 
 </script>

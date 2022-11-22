@@ -75,13 +75,14 @@ class BuscaObrasPublicoController extends Controller
             ['ano_obra', $request->input('ano_obra')],
             ['estado_conservacao_obra_id', $request->input('estado_de_conservacao_obra')],
             ['autoria_obra', $request->input('autoria_obra')],
-            ['material_id_1', $request->input('material_obra')],
-            ['material_id_2', $request->input('material_obra')],
-            ['material_id_3', $request->input('material_obra')],
-            ['tecnica_id_1', $request->input('tecnica_obra')],
-            ['tecnica_id_2', $request->input('tecnica_obra')],
-            ['tecnica_id_3', $request->input('tecnica_obra')]
+            ['material', $request->input('material_obra')],
+            ['tecnica', $request->input('tecnica_obra')],
         );
+
+        // Inicializa a lista de campos múltiplos 
+        $multiplos = ['material', 'tecnica'];
+        $multiplosMateriais = ['material_id_1', 'material_id_2', 'material_id_3'];
+        $multiplosTecnicas = ['tecnica_id_1', 'tecnica_id_2', 'tecnica_id_3'];
 
         // Cria a query para buscar as obras selecionando todas as obras
         $query = Obras::select('obras.*');
@@ -89,20 +90,31 @@ class BuscaObrasPublicoController extends Controller
         // Percorre a lista de filtros e aplica os filtros que não são nulos
         foreach($filtros as $filtro){
             if($filtro[1] != null){
-                $query->where($filtro[0], $filtro[1]);
+                # Checa se o campo está na lista de campos com múltiplas colunas (por exemplo: materiais e técnicas)
+                if(in_array($filtro[0], $multiplos)){
+                    # Se estiver, aplica o filtro com and e or aninhados para ambas as colunas
+                    $query = $query->where(function($query) use ($filtro, $multiplosMateriais){
+                        foreach($multiplosMateriais as $material){
+                            $query->orWhere($material, $filtro[1]);
+                        }
+                    });
+
+                    $query = $query->where(function($query) use ($filtro, $multiplosTecnicas){
+                        foreach($multiplosTecnicas as $tecnica){
+                            $query->orWhere($tecnica, $filtro[1]);
+                        }
+                    });
+                }else{
+                    // Se não estiver, faz a comparação com where normalmente
+                    $query->where($filtro[0], $filtro[1]);
+                }
             }
         }
 
         // Pega os dados
         $obras = $query->get();
 
-        // Imprime obras
-        //dd($obras);
-
-        // imprime os filtros
-        //dd($filtros);
-
-        // Imprime a query gerada
-        dd($query->toSql());
+        // Retorna o json com os dados
+        return response()->json($obras);
     }
 }

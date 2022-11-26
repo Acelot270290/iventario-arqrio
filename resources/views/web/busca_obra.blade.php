@@ -261,6 +261,12 @@
               </div>
             </form>
           </div>
+          <div class="card">
+                  <div class="card-body">
+                    <div id="buscaObras" class="list-unstyled row clearfix">
+                    </div>
+                  </div>
+                </div>
         </div>
         <!-- Home da área restrita -->
       </div>
@@ -281,6 +287,7 @@
           data: $(this).serialize(),
       }).done(function(data) {
           console.log(data);
+          $('#buscaObras').empty().append(data);
       });
   });
 

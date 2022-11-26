@@ -704,7 +704,7 @@
   </section>
 </div>
 
-{{--}} Inclubde das modeais {{---}}
+{{--}} Include das modais {{---}}
 @include('admin.modal.cadastroLocalicacaoObra')
 @include('admin.modal.cadastroTesauro')
 @include('admin.modal.cadastroMaterial')

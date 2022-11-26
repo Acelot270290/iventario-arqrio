@@ -16,6 +16,7 @@ use App\Models\Tecnicas;
 use App\Models\Tesauros;
 use App\Models\Tombamentos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BuscaObrasPublicoController extends Controller
 {
@@ -114,7 +115,20 @@ class BuscaObrasPublicoController extends Controller
         // Pega os dados
         $obras = $query->get();
 
+        // Inicializa a string de retorno
+        $controles = "";
+
+        // Para cada elemento de obras
+        foreach($obras as $obra){
+            // Para cada elemento em obras monte um card
+            $controles .= "<div style=\"background-color: coral; border-style: dotted; height: 300px;\" class=\"col-lg-3 col-md-4 col-sm-6 col-xs-12\">";
+            $controles .= "<a href=\"" . url($obra->foto_frontal_obra) . "\" data-sub-html=\"Demo Description\">";
+            $controles .= "<img style=\"width: 100%; margin: 15px 0px;\" class=\"img-responsive thumbnail\" src=\"" . url($obra->foto_frontal_obra) . "\" alt=\"Teste\">";
+            $controles .= "</a>";
+            $controles .= "</div>";
+        }
+
         // Retorna o json com os dados
-        return response()->json($obras);
+        return response()->json($controles);
     }
 }

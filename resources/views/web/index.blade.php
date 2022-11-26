@@ -283,7 +283,7 @@
 					<div class="row">
 						<div class="col-lg-3 col-md-6 single-blog">
 							<div class="thumb">
-								<img class="img-fluid" src="{{url('/noticias/noticia01.jpg')}}" alt="">								
+								<img class="img-fluid" src="{{ url('/noticias/noticia01.jpg') }}" alt="">								
 							</div>
 							<p class="date"> 24/06/2022</p>
 							<a href="#"><h4>Inventário da ARQ-RIO é notícia nos veículos de comunicação!</h4></a>
@@ -297,7 +297,7 @@
 						</div>			
 						<div class="col-lg-3 col-md-6 single-blog">
 							<div class="thumb">
-								<img class="img-fluid" src="{{url('/noticias/noticia02.jpg')}}" alt="">								
+								<img class="img-fluid" src="{{ url('/noticias/noticia02.jpg') }}" alt="">								
 							</div>
 							<p class="date"> 24/06/2022</p>
 							<a href="#"><h4>Acompanhe também o Inventário da ARQ-RIO no Instagram</h4></a>
@@ -311,7 +311,7 @@
 						</div>	
 						<div class="col-lg-3 col-md-6 single-blog">
 							<div class="thumb">
-								<img class="img-fluid" src="{{url('/noticias/noticia03.jpg')}}" alt="">								
+								<img class="img-fluid" src="{{ url('/noticias/noticia03.jpg') }}" alt="">								
 							</div>
 							<p class="date"> 24/06/2022</p>
 							<a href="#"><h4>Preciosidades do Acervo da Zona Oeste Carioca – A Capela São Pedro</h4></a>
@@ -325,7 +325,7 @@
 						</div>	
 						<div class="col-lg-3 col-md-6 single-blog">
 							<div class="thumb">
-								<img class="img-fluid" src="{{url('/noticias/noticia04.jpg')}}" alt="">								
+								<img class="img-fluid" src="{{ url('/noticias/noticia04.jpg') }}" alt="">								
 							</div>
 							<p class="date"> 24/06/2022</p>
 							<a href="#"><h4>Início do Inventário dos Bens Culturais do Museu Arquidiocesano</h4></a>
@@ -353,14 +353,14 @@
 						</div>
 					</div>						
 					<div id="grid-container" class="row">
-						<a class="single-gallery " href="{{url('galeria\Obra01.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra01.webp')}}"></a>
-						<a class="single-gallery" href="{{url('galeria\Obra02.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra02.webp')}}"></a>
-						<a class="single-gallery" href="{{url('galeria\Obra03.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra03.webp')}}"></a>
-						<a class="single-gallery" href="{{url('galeria\Obra04.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra04.webp')}}"></a>
-						<a class="single-gallery" href="{{url('galeria\Obra05.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra05.webp')}}"></a>
-						<a class="single-gallery" href="{{url('galeria\Obra06.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra06.webp')}}"></a>
-						<a class="single-gallery" href="{{url('galeria\Obra07.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra07.webp')}}"></a>
-						<a class="single-gallery" href="{{url('galeria\Obra08.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra08.webp')}}"></a>						
+						<a class="single-gallery " href="{{ url('galeria\Obra01.webp') }}"><img class="grid-item border border-white" src="{{ url('galeria\Obra01.webp') }}"></a>
+						<a class="single-gallery" href="{{ url('galeria\Obra02.webp') }}"><img class="grid-item border border-white" src="{{ url('galeria\Obra02.webp') }}"></a>
+						<a class="single-gallery" href="{{ url('galeria\Obra03.webp') }}"><img class="grid-item border border-white" src="{{ url('galeria\Obra03.webp') }}"></a>
+						<a class="single-gallery" href="{{ url('galeria\Obra04.webp') }}"><img class="grid-item border border-white" src="{{ url('galeria\Obra04.webp') }}"></a>
+						<a class="single-gallery" href="{{ url('galeria\Obra05.webp') }}"><img class="grid-item border border-white" src="{{ url('galeria\Obra05.webp') }}"></a>
+						<a class="single-gallery" href="{{ url('galeria\Obra06.webp') }}"><img class="grid-item border border-white" src="{{ url('galeria\Obra06.webp') }}"></a>
+						<a class="single-gallery" href="{{ url('galeria\Obra07.webp') }}"><img class="grid-item border border-white" src="{{ url('galeria\Obra07.webp') }}"></a>
+						<a class="single-gallery" href="{{ url('galeria\Obra08.webp') }}"><img class="grid-item border border-white" src="{{ url('galeria\Obra08.webp') }}"></a>						
 					</div>	
 				</div>	
 			</section>

@@ -118,14 +118,51 @@ class BuscaObrasPublicoController extends Controller
         // Inicializa a string de retorno
         $controles = "";
 
+        // Temporário para o css, mas vai ser removido para por no .css
+        $css = "background-color: #fff; border-radius: 10px; border: none; position: relative; margin-bottom: 30px; margin-left: 2px; margin-right: 2px; box-shadow: 0 0.46875rem 2.1875rem rgb(90 97 105 / 10%), 0 0.9375rem 1.40625rem rgb(90 97 105 / 10%), 0 0.25rem 0.53125rem rgb(90 97 105 / 12%), 0 0.125rem 0.1875rem rgb(90 97 105 / 10%); height: 350px;";
+
+        // Ids de permissões TODO: mover para um local centralizado para evitar hardcoding
+        $allowEdit = ['1', '2', '3', '5'];
+        $canOnlyView = ['6'];
+        $allowDelete = ['1', '2'];
+
         // Para cada elemento de obras
         foreach($obras as $obra){
             // Para cada elemento em obras monte um card
-            $controles .= "<div style=\"background-color: coral; border-style: dotted; height: 300px;\" class=\"col-lg-3 col-md-4 col-sm-6 col-xs-12\">";
-            $controles .= "<a href=\"" . url($obra->foto_frontal_obra) . "\" data-sub-html=\"Demo Description\">";
-            $controles .= "<img style=\"width: 100%; margin: 15px 0px;\" class=\"img-responsive thumbnail\" src=\"" . url($obra->foto_frontal_obra) . "\" alt=\"Teste\">";
-            $controles .= "</a>";
-            $controles .= "</div>";
+            $controles .= '<div style="' . $css . '" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">' .
+            '<img style="width: 100%; margin: 15px 0px;" class="img-responsive thumbnail" src="' . url($obra->foto_frontal_obra) . '" alt="' . $obra->titulo_obra . '">';
+
+            // Checa se o usuário está logado e pode visualizar detalhes
+            if(auth()->user('id') && in_array(strval(auth()->user('id')['id_cargo']), array_merge($allowEdit, $canOnlyView))) {
+                $controles .= '<a><h5> ' . $obra->titulo_obra . ' </h5></a>';
+            }else{
+            $controles .= '<h5> ' . $obra->titulo_obra . ' </h5>';
+            }
+
+            $controles .= '<div style="text-align: center; margin-top: 10px;">';
+
+            // Checa se o usuário está logado
+            if(auth()->user('id')){
+
+                // Checa se pode editar
+                if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) {
+                $controles .= '<button class="btn btn-primary mr-1" onclick="location.href=\'' . route('editar_obra', ['id' => $obra->id]) . '\'")> Editar </button>';
+                }
+
+                // Checa se pode visualizar
+                if(in_array(strval(auth()->user('id')['id_cargo']), array_merge($allowEdit, $canOnlyView))) {
+                    $controles .=  '<button class="btn btn-success mr-1" onclick="location.href=\'' . route('detalhar_obra', ['id' => $obra->id]) . '\'")> Visualizar </button>';
+                }
+
+                // Checa se pode deletar
+                if(in_array(strval(auth()->user('id')['id_cargo']), $allowDelete))
+                {
+                    $controles .= '<button class="btn btn-danger mr-1"> Deletar </button>';
+                }
+            }
+
+            $controles .= '</div>' .
+            '</div>';
         }
 
         // Retorna o json com os dados

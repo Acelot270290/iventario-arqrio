@@ -133,10 +133,10 @@ class BuscaObrasPublicoController extends Controller
             '<img style="width: 100%; margin: 15px 0px;" class="img-responsive thumbnail" src="' . url($obra->foto_frontal_obra) . '" alt="' . $obra->titulo_obra . '">';
 
             // Checa se o usuário está logado e pode visualizar detalhes
-            if(auth()->user('id') && in_array(strval(auth()->user('id')['id_cargo']), array_merge($allowEdit, $canOnlyView))) {
-                $controles .= '<a><h5> ' . $obra->titulo_obra . ' </h5></a>';
+            if(auth()->user('id') && in_array(strval(auth()->user('id')['id_cargo']), array_merge($allowEdit, $canOnlyView)) || $obra->obra_visibilidade == 1) {
+                $controles .= '<a href="' . route('detalhar_obras_publico', ['id' => $obra->id]) . '"><h5> ' . $obra->titulo_obra . ' </h5></a>';
             }else{
-            $controles .= '<h5> ' . $obra->titulo_obra . ' </h5>';
+                $controles .= '<a href="' . route('detalhar_obras_publico', ['id' => $obra->id]) . '"><h5> ' . $obra->titulo_obra . ' </h5></a>';
             }
 
             $controles .= '<div style="text-align: center; margin-top: 10px;">';
@@ -167,5 +167,45 @@ class BuscaObrasPublicoController extends Controller
 
         // Retorna o json com os dados
         return response()->json($controles);
+    }
+
+    public function detalhar(Request $request, $id){
+        // Seleciona os dados de obras para detalhamento (query completa com as devidas associações)
+        $obra = Obras::select('obras.id', 'acervo_id', 'nome_acervo', 'obras.created_at', 'obras.updated_at', 'categoria_id', 'titulo_categoria', 'titulo_obra', 'foto_frontal_obra', 'foto_lateral_esquerda_obra', 'foto_lateral_direita_obra', 'foto_posterior_obra', 'foto_superior_obra', 'foto_inferior_obra', 'tesauro_id', 'titulo_tesauro', 'altura_obra', 'largura_obra', 'profundidade_obra', 'comprimento_obra', 'diametro_obra', 'material_id_1', 'm1.titulo_material as titulo_material_1', 'material_id_2', 'm2.titulo_material as titulo_material_2', 'material_id_3', 'm3.titulo_material as titulo_material_3', 'tecnica_id_1', 't1.titulo_tecnica as titulo_tecnica_1', 'tecnica_id_2', 't2.titulo_tecnica as titulo_tecnica_2', 'tecnica_id_3', 't3.titulo_tecnica as titulo_tecnica_3', 'obras.seculo_id', 'titulo_seculo', 'ano_obra', 'autoria_obra', 'procedencia_obra', 'estado_conservacao_obra_id', 'titulo_estado_conservacao_obra', 'checkbox_especificacao_obra', 'condicoes_de_seguranca_obra_id', 'titulo_condicao_seguranca_obra', 'checkbox_especificacao_seguranca_obra','caracteristicas_est_icono_orna_obra', 'observacoes_obra', 'localizacao_obra_id', 'nome_localizacao', 'obras.usuario_insercao_id', 'u1.name as usuario_cadastrante', 'obras.usuario_atualizacao_id', 'u2.name as usuario_revisor', 'obra_provisoria')
+            ->where('obras.id', '=', intval($id))
+            ->join('acervos as a', 'a.id', '=', 'acervo_id')
+            ->join('categorias as c', 'c.id', '=', 'categoria_id')
+            ->join('tesauros as te', 'te.id', '=', 'tesauro_id')
+            ->leftjoin('materiais as m1', 'm1.id', '=', 'material_id_1')
+            ->leftjoin('materiais as m2', 'm2.id', '=', 'material_id_2')
+            ->leftjoin('materiais as m3', 'm3.id', '=', 'material_id_3')
+            ->leftjoin('tecnicas as t1', 't1.id', '=', 'tecnica_id_1')
+            ->leftjoin('tecnicas as t2', 't2.id', '=', 'tecnica_id_2')
+            ->leftjoin('tecnicas as t3', 't3.id', '=', 'tecnica_id_3')
+            ->join('seculos as s', 's.id', '=', 'obras.seculo_id')
+            ->join('estado_conservacao_obras as ec', 'ec.id', '=', 'estado_conservacao_obra_id')
+            ->join('condicao_seguranca_obras as cs', 'cs.id', '=', 'condicoes_de_seguranca_obra_id')
+            ->join('localizacoes_obras as l', 'l.id', '=', 'localizacao_obra_id')
+            ->join('users as u1', 'u1.id', '=', 'obras.usuario_insercao_id')
+            ->leftJoin('users as u2', 'u2.id', '=', 'obras.usuario_atualizacao_id')
+            ->first();
+
+
+        // Como as especificações não são chave estrangeira perfeita, o split da string é feita utilizando como separador a ,
+        $especificacoes_array = explode(',', $obra->checkbox_especificacao_obra);
+        $especificacoes = EspecificacaoObras::find($especificacoes_array);
+
+        // Como as especificações de segurança não são chave estrangeira perfeita, o split da string é feita utilizando como separador a ,
+        $especificacoes_seg_array = explode(',', $obra->checkbox_especificacao_seguranca_obra);
+        $especificacoesSeg = EspecificacaoSegurancaObras::find($especificacoes_seg_array);
+
+       // var_dump($obra);die();
+
+        // Retorna a visualização de detalhamento de obras com os dados coletados
+        return view('web.detalhar_obras_publico', [
+            'obra' => $obra,
+            'especificacoes' => $especificacoes,
+            'especificacoesSeg' => $especificacoesSeg
+        ]);
     }
 }

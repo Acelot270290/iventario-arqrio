@@ -26,6 +26,9 @@ Route::get('/busca/obras', 'BuscaObrasPublicoController@index')->name('busca_obr
 
 Route::post('/busca/obras/form', 'BuscaObrasPublicoController@busca')->name('busca_obras_publico_form');
 
+Route::get('/obra/publico/detalhar/{id}', 'BuscaObrasPublicoController@detalhar')->name('detalhar_obras_publico');
+
+
 
 //Admin do Site
 Route::get('/admin', 'LoginController@index')->name('login');

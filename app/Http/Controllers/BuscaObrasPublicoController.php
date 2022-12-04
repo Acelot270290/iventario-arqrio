@@ -129,7 +129,7 @@ class BuscaObrasPublicoController extends Controller
         // Para cada elemento de obras
         foreach($obras as $obra){
             // Para cada elemento em obras monte um card
-            $controles .= '<div class="col-lg-4 col-sm-6 mr-3">' .
+            $controles .= '<div class="col-lg-4 col-sm-4">' .
             '<img  class="img-thumbnail mb-3" src="' . url($obra->foto_frontal_obra) . '" alt="' . $obra->titulo_obra . '">';
 
             // Checa se o usuário está logado e pode visualizar detalhes

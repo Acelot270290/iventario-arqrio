@@ -51,9 +51,13 @@ display: none;
 }
 
 .img-thumbnail {
-            width: 100%;
-            height: 200px !important;
-            object-fit: cover;
+  padding: 0.25rem;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    max-width: 30%;
+    height: auto;
+    object-fit: cover;
 }
   </style>
 
@@ -316,7 +320,7 @@ display: none;
           </div>
           <div class="card">
             <div class="card-body">
-              <div id="buscaObras" class="list-unstyled row clearfix">
+              <div id="buscaObras" class="row">
               </div>
             </div>
         </div>

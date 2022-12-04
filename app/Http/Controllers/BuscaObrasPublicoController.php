@@ -129,8 +129,8 @@ class BuscaObrasPublicoController extends Controller
         // Para cada elemento de obras
         foreach($obras as $obra){
             // Para cada elemento em obras monte um card
-            $controles .= '<div style="' . $css . '" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">' .
-            '<img style="width: 100%; margin: 15px 0px;" class="img-responsive thumbnail" src="' . url($obra->foto_frontal_obra) . '" alt="' . $obra->titulo_obra . '">';
+            $controles .= '<div  style="class="col-lg-4 col-sm-6">' .
+            '<img  class="img-thumbnail" src="' . url($obra->foto_frontal_obra) . '" alt="' . $obra->titulo_obra . '">';
 
             // Checa se o usuário está logado e pode visualizar detalhes
             if(auth()->user('id') && in_array(strval(auth()->user('id')['id_cargo']), array_merge($allowEdit, $canOnlyView)) || $obra->obra_visibilidade == 1) {

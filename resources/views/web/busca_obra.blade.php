@@ -50,6 +50,11 @@ display: none;
     transition: all 0.5s;
 }
 
+.img-thumbnail {
+            width: 100%;
+            height: 200px !important;
+            object-fit: cover;
+}
   </style>
 
 <div class="busca-obras-publico" style="min-height: 562px;">

@@ -157,9 +157,9 @@
                         </div>
                       </div>
                       @if(array_key_exists('altura_obra', $repeat))
-                        <input type="number" class="form-control" name="altura_obra" value="{{ $repeat['altura_obra'] }}">
+                        <input type="number" class="form-control remover" name="altura_obra" value="{{ $repeat['altura_obra'] }}">
                       @else
-                        <input type="number" class="form-control" name="altura_obra" value="{{ old('altura_obra') }}">
+                        <input type="number" class="form-control remover" name="altura_obra" value="{{ old('altura_obra') }}">
                       @endif
                     </div>
                     <small class="text-danger">{{ $errors->first('altura_obra') }}</small>
@@ -173,9 +173,9 @@
                         </div>
                       </div>
                       @if(array_key_exists('largura_obra', $repeat))
-                        <input type="number" class="form-control" name="largura_obra" value="{{ $repeat['largura_obra'] }}">
+                        <input type="number" class="form-control remover" name="largura_obra" value="{{ $repeat['largura_obra'] }}">
                       @else
-                        <input type="number" class="form-control" name="largura_obra" value="{{ old('largura_obra') }}">
+                        <input type="number" class="form-control remover" name="largura_obra" value="{{ old('largura_obra') }}">
                       @endif
                     </div>
                     <small class="text-danger">{{ $errors->first('largura_obra') }}</small>
@@ -189,9 +189,9 @@
                         </div>
                       </div>
                       @if(array_key_exists('profundidade_obra', $repeat))
-                        <input type="number" class="form-control" name="profundidade_obra" value="{{ $repeat['profundidade_obra'] }}">
+                        <input type="number" class="form-control remover" name="profundidade_obra" value="{{ $repeat['profundidade_obra'] }}">
                       @else
-                        <input type="number" class="form-control" name="profundidade_obra" value="{{ old('profundidade_obra') }}">
+                        <input type="number" class="form-control remover" name="profundidade_obra" value="{{ old('profundidade_obra') }}">
                       @endif
                     </div>
                     <small class="text-danger">{{ $errors->first('profundidade_obra') }}</small>
@@ -205,9 +205,9 @@
                         </div>
                       </div>
                       @if(array_key_exists('comprimento_obra', $repeat))
-                        <input type="number" class="form-control" name="comprimento_obra" value="{{ $repeat['comprimento_obra'] }}">
+                        <input type="number" class="form-control remover" name="comprimento_obra" value="{{ $repeat['comprimento_obra'] }}">
                       @else
-                        <input type="number" class="form-control" name="comprimento_obra" value="{{ old('comprimento_obra') }}">
+                        <input type="number" class="form-control remover" name="comprimento_obra" value="{{ old('comprimento_obra') }}">
                       @endif
                     </div>
                     <small class="text-danger">{{ $errors->first('comprimento_obra') }}</small>
@@ -221,9 +221,9 @@
                         </div>
                       </div>
                       @if(array_key_exists('diametro_obra', $repeat))
-                        <input type="number" class="form-control" name="diametro_obra" value="{{ $repeat['diametro_obra'] }}">
+                        <input type="number" class="form-control remover" name="diametro_obra" value="{{ $repeat['diametro_obra'] }}">
                       @else
-                        <input type="number" class="form-control" name="diametro_obra" value='{{ old('diametro_obra') }}'>
+                        <input type="number" class="form-control remover" name="diametro_obra" value='{{ old('diametro_obra') }}'>
                       @endif
                     </div>
                     <small class="text-danger">{{ $errors->first('diametro_obra') }}</small>
@@ -714,6 +714,22 @@
 @include('sweetalert::alert')
 
 <script>
+
+var input = document.querySelector(".remover");
+input.addEventListener("keypress", function(e) {
+    if(!checkChar(e)) {
+      e.preventDefault();
+  }
+});
+function checkChar(e) {
+    var char = String.fromCharCode(e.keyCode);
+  
+  console.log(char);
+    var pattern = '[a-zA-Z0-9]';
+    if (char.match(pattern)) {
+      return true;
+  }
+}
   // Parametrização de variáveis
   @foreach ($seculos as $seculo)
     @if ($seculo['is_default_seculo'])

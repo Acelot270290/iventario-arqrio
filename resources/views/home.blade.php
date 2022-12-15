@@ -16,6 +16,7 @@
               <div class="align-items-center justify-content-between">
                 <div class="row ">
                   <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                    <a href="{{ route('busca_obras') }}">
                     <div class="card-content">
                       <h5 class="font-15">Pesquisar</h5>
                     </div>

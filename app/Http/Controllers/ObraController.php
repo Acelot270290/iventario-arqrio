@@ -227,7 +227,7 @@ class ObraController extends Controller
             'largura_obra' => $request->largura_obra,
             'profundidade_obra' => $request->profundidade_obra,
             'comprimento_obra' => $request->comprimento_obra,
-            'diametro_obra' => $request->diâmetro_obra,
+            'diametro_obra' => $request->diametro_obra,
             'tesauro_id' => $request->tesauro_obra,
             'localizacao_obra_id' => $request->localizacao_obra,
             'condicoes_de_seguranca_obra_id' => $request->condicao_seguranca_obra,
